@@ -1,9 +1,3 @@
 ---
-layout: default
-title: Главная
-nav_order: 0
+layout: home
 ---
-
-# Database from scratch
-
-Пишем database на Go

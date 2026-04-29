@@ -1,0 +1,22 @@
+title: "Database from scratch"
+description: "Пишем database на Go"
+url: "https://edylcrm.github.io"
+baseurl: "/db-from-scratch"
+
+remote_theme: just-the-docs/just-the-docs
+
+color_scheme: dark
+
+# Подсветка синтаксиса
+highlighter: rouge
+markdown: kramdown
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# Плагины
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-remote-theme

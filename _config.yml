@@ -1,12 +1,12 @@
 title: "Database from scratch"
-tagline: "Пишем database на Go"
+subtitle: "Пишем database на Go"
 description: "Серия статей о том, как устроены LSM-деревья, и полная реализация на Go"
 url: "https://edylcrm.github.io"
 baseurl: "/db-from-scratch"
 
-remote_theme: cotes2020/jekyll-theme-chirpy
+remote_theme: mmistakes/minimal-mistakes
 
-lang: ru-RU
+locale: "ru-RU"
 
 highlighter: rouge
 markdown: kramdown
@@ -19,11 +19,13 @@ plugins:
   - jekyll-feed
   - jekyll-seo-tag
   - jekyll-remote-theme
+  - jekyll-include-cache
 
 defaults:
   - scope:
       path: ""
       type: posts
     values:
-      layout: post
+      layout: single
       toc: true
+      toc_sticky: true

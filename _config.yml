@@ -1,8 +1,11 @@
 title: "Database from scratch"
 tagline: "Пишем database на Go"
-description: "Серия статей о том, как устроены LSM-деревья, и полная реализация на Go"
+description: "Серия статей о том, как устроены database, и полная реализация на Go"
 url: "https://edylcrm.github.io"
 baseurl: "/db-from-scratch"
+
+author: "edylcrm"
+github_username: edylcrm
 
 theme: minima
 

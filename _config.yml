@@ -1,6 +1,6 @@
 title: "Database from scratch"
 tagline: "Пишем database на Go"
-description: "Пишем полноценную базу данных на Go с нуля"
+description: "Пишем базу данных на Go с нуля — не для продакшена, а чтобы разобраться, как всё устроено внутри"
 url: "https://edylcrm.github.io"
 baseurl: "/db-from-scratch"
 

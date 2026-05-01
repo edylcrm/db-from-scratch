@@ -162,7 +162,7 @@ func (l *Log) Get(key []byte) ([]byte, error) {
 	// Сканируем все записи от начала файла.
 	// Для каждой записи с совпадающим ключом обновляем result.
 	// В итоге result будет содержать значение из последней записи.
-	err := l.scan(func(k, v []byte) error {
+	err := l.scan(func(k, v []byte, _ int64) error {
 		if string(k) == string(key) {
 			if string(v) == tombstoneVal {
 				// Tombstone — ключ удалён. Сбрасываем результат,
@@ -187,7 +187,12 @@ func (l *Log) Get(key []byte) ([]byte, error) {
 }
 
 // scan итерирует все записи файла от начала до конца.
-// Для каждой валидной записи вызывает fn(key, value).
+// Для каждой валидной записи вызывает fn(key, value, offset).
+//
+// offset — смещение записи в байтах от начала файла.
+// Это позволяет вызывающему коду запомнить, где именно лежит запись,
+// чтобы потом прочитать её напрямую через Seek, минуя полный скан.
+// Например, HashDB строит in-memory индекс {key → offset} при старте.
 //
 // Оборванная запись в конце файла (результат краша) — молча игнорируется.
 // Это корректно: если процесс упал на полузаписи, последняя запись
@@ -196,11 +201,15 @@ func (l *Log) Get(key []byte) ([]byte, error) {
 // Как работает чтение одной записи:
 //
 //  Файл: [CRC32 | key_len | val_len | key | value] [CRC32 | key_len | ...]
-func (l *Log) scan(fn func(key, value []byte) error) error {
+//         ^                                          ^
+//         offset=0                                   offset=12+N+M
+func (l *Log) scan(fn func(key, value []byte, offset int64) error) error {
 	// Перематываем файл в начало перед чтением.
 	// Write всегда идёт в конец (O_APPEND), а Seek влияет только
 	// на позицию чтения — они не конфликтуют.
-	if _, err := l.file.Seek(0, io.SeekStart); err != nil {
+	// Seek возвращает итоговую позицию — используем её как начальный offset (0).
+	offset, err := l.file.Seek(0, io.SeekStart)
+	if err != nil {
 		return err
 	}
 
@@ -270,8 +279,13 @@ func (l *Log) scan(fn func(key, value []byte) error) error {
 		//            0        4         8          8+keyLen
 		//                               ^          ^
 		//                               |── key ──||── value ──|
-		if err := fn(payload[8:8+keyLen], payload[8+keyLen:]); err != nil {
+		if err := fn(payload[8:8+keyLen], payload[8+keyLen:], offset); err != nil {
 			return err
 		}
+
+		// Сдвигаем offset на размер только что прочитанной записи:
+		// recordHeaderSize (12 байт) + длина ключа + длина значения.
+		// После этого offset указывает на начало следующей записи.
+		offset += int64(recordHeaderSize + keyLen + valLen)
 	}
 }

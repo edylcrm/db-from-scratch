@@ -10,3 +10,5 @@ title: Главная
 - [Часть 1.1: Append-Only Log — самое простое хранилище]({% post_url 2026-04-30-part-1.1 %})
 - [Часть 1.2: Hash Index — ускоряем чтение до O(1)]({% post_url 2026-04-30-part-1.2 %})
 - [Часть 1.3: Итоги — Append-Only Log и Hash Index]({% post_url 2026-05-01-part-1.3 %})
+- [Часть 1.4: LSM-tree — как устроен современный storage engine]({% post_url 2026-05-02-part-1.4 %})
+- [Часть 1.5: Skip List — структура данных для memtable]({% post_url 2026-05-02-part-1.5 %})

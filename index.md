@@ -12,3 +12,4 @@ title: Главная
 - [Часть 1.3: Итоги — Append-Only Log и Hash Index]({% post_url 2026-05-01-part-1.3 %})
 - [Часть 1.4: LSM-tree — как устроен современный storage engine]({% post_url 2026-05-02-part-1.4 %})
 - [Часть 1.5: Skip List — структура данных для memtable]({% post_url 2026-05-02-part-1.5 %})
+- [Часть 1.6: WAL — гарантия того, что данные не потеряются]({% post_url 2026-05-02-part-1.6 %})

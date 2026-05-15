@@ -430,7 +430,6 @@ func (w *WAL) TruncateBefore(lsn LSN) error {
 // Без лимита, при непрерывном потоке писателей, drain-цикл мог бы
 // бесконечно читать из канала и никогда не дойти до fsync —
 // все писатели зависли бы на своих done-каналах.
-const maxBatchSize = 1024
 
 // writeResult — результат записи, который commitLoop отправляет
 // обратно писателю через done channel.
@@ -579,7 +578,6 @@ func (gc *GroupCommitWAL) commitLoop() {
 				gc.flushBatch(batch)
 			}
 			return
-
 		case pw := <-gc.pending:
 			// Получили первую запись. Теперь забираем всё,
 			// что накопилось в канале за время, пока мы обрабатывали
@@ -592,7 +590,6 @@ func (gc *GroupCommitWAL) commitLoop() {
 			for len(batch) < maxBatchSize && len(gc.pending) > 0 {
 				batch = append(batch, <-gc.pending)
 			}
-
 		case <-ticker.C:
 			// Прошло 2 мс — если в батче что-то есть, flush'им.
 			// Это гарантирует, что одинокая запись не будет ждать

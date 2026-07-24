@@ -34,6 +34,7 @@
 - [Часть 1.5: Skip List — структура данных для memtable](https://edylcrm.github.io/db-from-scratch/2026/05/02/part-1.5.html)
 - [Часть 1.6: WAL — гарантия того, что данные не потеряются](https://edylcrm.github.io/db-from-scratch/2026/05/04/part-1.6.html)
 - [Часть 1.7: SSTable — как memtable попадает на диск](https://edylcrm.github.io/db-from-scratch/2026/05/04/part-1.7.html)
+- [Часть 1.8: LSM Engine — собираем всё вместе](https://edylcrm.github.io/db-from-scratch/2026/05/06/part-1.8.html)
 
 ## Как читать
 
